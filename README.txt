@@ -3,12 +3,13 @@
 Установка:
 1. Установите Python 3.10+.
 2. Выполните: pip install -r requirements.txt
-3. Переименуйте config.example.json в config.json и заполните ID и токен.
-4. В Discord Developer Portal включите Server Members Intent.
-5. Выдайте боту права Manage Roles, Send Messages, Embed Links, Use Application Commands.
-6. Роль бота должна находиться выше ролей, которые он выдаёт и снимает.
-7. Запустите: python bot.py
-8. В Discord выполните /setup_promotion.
+3. Переименуйте config.example.json в config.json и заполните ID ролей и канала.
+4. В панели хостинга добавьте переменную окружения BOT_TOKEN со значением токена Discord-бота. Токен в config.json не указывается.
+5. В Discord Developer Portal включите Server Members Intent.
+6. Выдайте боту права Manage Roles, Send Messages, Embed Links, Use Application Commands.
+7. Роль бота должна находиться выше ролей, которые он выдаёт и снимает.
+8. Запустите: python bot.py
+9. В Discord выполните /setup_promotion.
 
 Подать рапорт может только пользователь с ролью «Сотрудник семьи».
 Выбранный участник также должен иметь эту роль.

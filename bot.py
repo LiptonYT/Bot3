@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import discord
 from discord.ext import commands
 from discord import app_commands
@@ -9,6 +10,10 @@ log = logging.getLogger('karateli-promotion')
 
 with open('config.json', 'r', encoding='utf-8') as f:
     CFG = json.load(f)
+
+BOT_TOKEN = os.getenv('BOT_TOKEN', '').strip()
+if not BOT_TOKEN:
+    raise RuntimeError('Не задан токен бота. Добавьте переменную окружения BOT_TOKEN в панели хостинга.')
 
 intents = discord.Intents.default()
 intents.members = True
@@ -248,4 +253,4 @@ async def setup_promotion(interaction: discord.Interaction):
 
 
 if __name__ == '__main__':
-    bot.run(CFG['bot_token'])
+    bot.run(BOT_TOKEN)
