@@ -166,7 +166,20 @@ class ReasonModal(discord.ui.Modal, title='Причина повышения'):
         }
         # Send first, then persist the real message ID and update the footer with request number.
         placeholder = discord.Embed(title='💀 НОВЫЙ СПИСОК НА ПОВЫШЕНИЕ', description='Подготовка рапорта…', color=discord.Color.dark_red())
-        msg = await channel.send(embed=placeholder, allowed_mentions=discord.AllowedMentions.none())
+        # Ping the configured senior-staff roles when a new report is posted.
+        senior_role_mentions = ' '.join(f'<@&{role_id}>' for role_id in sorted(SENIOR_ROLE_IDS))
+        allowed_role_mentions = [discord.Object(id=role_id) for role_id in SENIOR_ROLE_IDS]
+        allowed = discord.AllowedMentions(
+            everyone=False,
+            users=False,
+            roles=allowed_role_mentions,
+            replied_user=False,
+        )
+        msg = await channel.send(
+            content=senior_role_mentions or None,
+            embed=placeholder,
+            allowed_mentions=allowed,
+        )
         with db_connect() as con:
             cur = con.execute('''INSERT INTO promotions (guild_id, channel_id, message_id, target_id, author_id, current_rank, new_rank, reason)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
